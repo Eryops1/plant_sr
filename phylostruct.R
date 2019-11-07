@@ -11,7 +11,12 @@ source("plant_sr/functions.R")
 
 # retrieve link tables, phylogenies, and wcsp data (from add_species.R)
 load("plant_sr_data/MATCHES_a_a.RData")
+# includes MATCHES_a_a, MATCHES_a_a_a, phylo_a, phylo_a_a_a, wcsp
+## MATCHES_a_a: dataframe with columns tip | conservative
+## MATCHES_a_a_a: shorter df with columns tip | conservative
+
 load("plant_sr_data/MATCHES_b_a.RData")
+# MATCHES_b_a, MATCHES_b_a_a, 
 rm(MATCHES_a_a, MATCHES_b_a, phylo_a, phylo_b)
 
 # retrieve community matrix (from process_geography.R)
@@ -30,7 +35,7 @@ load("plant_sr_data/comm.RData")
 trees <- c("phylo_a_a_a", "phylo_b_a_a") # c("testtree", "phylo_a", "phylo_a_a_a", "phylo_a_b_a", "phylo_b", "phylo_b_a_a", "phylo_b_b_a")
 
 for(i in 1:length(trees)){
-  assign(paste("RD.", trees[i], sep=""), unlist(root.distance(get(trees[i]), mc.cores = 4)))
+  assign(paste("RD.", trees[i], sep=""), unlist(root.distance(get(trees[i]), mc.cores = 28)))
   #saveRDS(get(paste("RD.", trees[i], sep="")), paste("RD.", trees[i], ".rds", sep=""))
   print(paste(paste("RD.", trees[i], sep=""), "calculated.", Sys.time()))
 

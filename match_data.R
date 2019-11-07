@@ -10,7 +10,7 @@ source("plant_sr/functions.R")
 # path to tree
 tree_path <- "v0.1"
 
-# read trees (from where actually?)
+# read trees (from where actually? - what the abbreviations
 read.tree(paste(tree_path, "/ALLMB.tre", sep="")) -> phylo_a
 read.tree(paste(tree_path, "/ALLOTB.tre", sep="")) -> phylo_b
 
