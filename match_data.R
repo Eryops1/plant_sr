@@ -1,33 +1,38 @@
-setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
+# setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
 
 library(ape)
 library(phytools)
 library(parallel)
 
 #load("match_data.RData")
-source("functions.R")
+source("plant_sr/functions.R")
 
 # path to tree
-tree_path <- "/Users/au265104/Documents/Smith_Brown_v0"
+tree_path <- "v0.1"
 
-# read trees
-read.tree(paste(tree_path, "/ALLMB_ultrametric.tree", sep="")) -> phylo_a
-read.tree(paste(tree_path, "/ALLOTB_ultrametric.tree", sep="")) -> phylo_b
+# read trees (from where actually?)
+read.tree(paste(tree_path, "/ALLMB.tre", sep="")) -> phylo_a
+read.tree(paste(tree_path, "/ALLOTB.tre", sep="")) -> phylo_b
 
 # exclude rogue Asteraceae
 phylo_a <- drop.tip(phylo_a, c("Schmidtia_capensis", "Hypochaeris_arachnoides"))
 phylo_b <- drop.tip(phylo_b, c("Schmidtia_capensis", "Hypochaeris_arachnoides"))
 
 # path to WCSP download
-wcsp_path = "/Users/au265104/Documents/WOLF/PROJECTS/58 World Checklist paper/October 2018"
+wcsp_path = "database"
 
 # read WCSP
 read.csv(paste(wcsp_path, "/published_names_19_10_2018.csv", sep=""), header=TRUE, sep="|") -> published
 read.csv(paste(wcsp_path, "/unpublished_names_19_10_2018.csv", sep=""), header=TRUE, sep="|") -> unpublished
+published$published <- "published"
+unpublished$published <- "unpublished"
 wcsp <- rbind(published,unpublished)
 rm(published, unpublished)
 
 rownames(wcsp) <- wcsp$checklist_id
+
+#read in latest download
+#ld <- readLines(paste0(wcsp_path, "/powoNames/taxon.txt"))
 
 # remove ferns from WCSP
 fernfam = as.vector(read.csv("fernfam_plantlist.csv")$x)

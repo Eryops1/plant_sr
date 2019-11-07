@@ -4,17 +4,15 @@
 get_matches <- function(i, phylo, wcsp_species, wcsp_infra){
   
   # initialize search for this tip label
-  
-  # split tip label by underscores
-  tip <- strsplit(phylo$tip.label[i], "_")[[1]]
-  
-  # initialize vector to receive matching checklist ids
-  matches <- c()
+  tip <- strsplit(phylo$tip.label[i], "_")[[1]] # split tip label by underscores
+  matches <- c() # initialize vector to receive matching checklist ids
   
   # look for infraspecific taxa if enough information is available
   if(length(tip)>=4){
     #look for matches in infraspecific taxa (keeping all matches) and find the corresponding accepted species
-    for(match in as.vector(wcsp_infra[wcsp_infra$genus == tip[1] & wcsp_infra$species == tip[2] & wcsp_infra$infraspecific_rank == gsub("\\.", "", tip[3]) & wcsp_infra$infraspecific_epithet == tip[4],"accepted_name_id"])){
+    for(match in as.vector(wcsp_infra[wcsp_infra$genus == tip[1] & wcsp_infra$species == tip[2] 
+                                      & wcsp_infra$infraspecific_rank == gsub("\\.", "", tip[3]) 
+                                      & wcsp_infra$infraspecific_epithet == tip[4],"accepted_name_id"])){
       matches <- c(matches, as.vector(wcsp_species[wcsp_species$genus == as.vector(wcsp_infra[match,"genus"]) & wcsp_species$species == as.vector(wcsp_infra[match,"species"]) & wcsp_species$taxon_status_description == "Accepted", "checklist_id"]))
     }
   }

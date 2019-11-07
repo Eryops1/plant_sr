@@ -2,20 +2,20 @@
 #args = commandArgs(trailingOnly=TRUE)
 #x = as.numeric(args[1])
 
-setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
+#setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
 #setwd("/data_vol/wolf/WCSP_paper/")
 
 library(ape)
 library(parallel)
-source("functions.R")
+source("plant_sr/functions.R")
 
 # retrieve link tables, phylogenies, and wcsp data (from add_species.R)
-load("MATCHES_a_a.RData")
-load("MATCHES_b_a.RData")
+load("plant_sr_data/MATCHES_a_a.RData")
+load("plant_sr_data/MATCHES_b_a.RData")
 rm(MATCHES_a_a, MATCHES_b_a, phylo_a, phylo_b)
 
 # retrieve community matrix (from process_geography.R)
-load("comm.RData")
+load("plant_sr_data/comm.RData")
 
 ####################################################
 # 1. Computing tree-level variables (RD and EDGES) #
@@ -30,11 +30,11 @@ load("comm.RData")
 trees <- c("phylo_a_a_a", "phylo_b_a_a") # c("testtree", "phylo_a", "phylo_a_a_a", "phylo_a_b_a", "phylo_b", "phylo_b_a_a", "phylo_b_b_a")
 
 for(i in 1:length(trees)){
-  assign(paste("RD.", trees[i], sep=""), unlist(root.distance(get(trees[i]), mc.cores = 28)))
+  assign(paste("RD.", trees[i], sep=""), unlist(root.distance(get(trees[i]), mc.cores = 4)))
   #saveRDS(get(paste("RD.", trees[i], sep="")), paste("RD.", trees[i], ".rds", sep=""))
   print(paste(paste("RD.", trees[i], sep=""), "calculated.", Sys.time()))
 
-  assign(paste("EDGES.", trees[i], sep=""), mclapply(1:Ntip(get(trees[i])), get_edges, phylo=get(trees[i]), mc.cores=28))
+  assign(paste("EDGES.", trees[i], sep=""), mclapply(1:Ntip(get(trees[i])), get_edges, phylo=get(trees[i]), mc.cores=4))
   #saveRDS(get(paste("EDGES.", trees[i], sep="")), paste("EDGES.", trees[i], ".rds", sep=""))
   print(paste(paste("EDGES.", trees[i], sep=""), "calculated.", Sys.time()))
 }

@@ -1,9 +1,9 @@
-setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
+#setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
 
 library(rgdal)
 
 #path to WCSP download
-wcsp_path = "/Users/au265104/Documents/WOLF/PROJECTS/58 World Checklist paper/October 2018"
+wcsp_path = "database"
 
 #read WCSP
 read.csv(paste(wcsp_path, "/published_names_19_10_2018.csv", sep=""), header=TRUE, sep="|") -> published
@@ -19,7 +19,7 @@ rm(published, unpublished)
 dist = dist[dist$introduced==0 & dist$extinct==0,] #remove introduced and extinct records
 dist$area_code_l3 = toupper(dist$area_code_l3)
 
-shape = readOGR(dsn = "/Volumes/My Book/WOLF/Aarhus PC/C/GIS workspace/projektuebergreifend",, layer = "level3")
+shape = readOGR(dsn = "shapefile", layer = "level3")
 
 goodspp = wcsp[wcsp$genus_hybrid_marker == "" & wcsp$species_hybrid_marker == "" & wcsp$infraspecific_rank == "" & wcsp$species != "" & wcsp$taxon_status_description == "Accepted",]
 
@@ -59,4 +59,4 @@ for(i in 1:nrow(dist)){
 }
 rm(i)
 
-save(comm, file="comm.RData")
+save(comm, file="plant_sr_data/comm.RData")

@@ -1,11 +1,11 @@
-setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
+#setwd("~/Documents/WOLF/PROJECTS/58 World Checklist paper/analyses 2019")
 
-source("functions.R")
+source("plant_sr/functions.R")
 
-load("comm.RData")
+load("plant_sr_data/comm.RData")
 
-bs_spp <- betasim(comm)
-
-save(bs_spp, file = "bs_spp.RData")
-
-save.image("sim_dis.RData")
+  bs_spp <- betasim(comm)
+  
+  save(bs_spp, file = "bs_spp.RData")
+  
+  save.image("sim_dis.RData")
