@@ -34,8 +34,10 @@ load("plant_sr_data/comm.RData")
 
 trees <- c("phylo_a_a_a", "phylo_b_a_a") # c("testtree", "phylo_a", "phylo_a_a_a", "phylo_a_b_a", "phylo_b", "phylo_b_a_a", "phylo_b_b_a")
 
+# this takes >1h
+
 for(i in 1:length(trees)){
-  assign(paste("RD.", trees[i], sep=""), unlist(root.distance(get(trees[i]), mc.cores = 28)))
+  assign(paste("RD.", trees[i], sep=""), unlist(root.distance(get(trees[i]), mc.cores = 4)))
   #saveRDS(get(paste("RD.", trees[i], sep="")), paste("RD.", trees[i], ".rds", sep=""))
   print(paste(paste("RD.", trees[i], sep=""), "calculated.", Sys.time()))
 
@@ -44,7 +46,7 @@ for(i in 1:length(trees)){
   print(paste(paste("EDGES.", trees[i], sep=""), "calculated.", Sys.time()))
 }
 rm(i)
-
+    
 ####################
 # 2. Calculate MRD #
 ####################
@@ -54,7 +56,7 @@ analyses <- cbind(
   c("MATCHES_a_a_a", "MATCHES_b_a_a")
 )
 rownames(analyses) <- c("a_a_a", "b_a_a")
-
+  
 # stub function for parallelization
 mrd <- function(i, MATCHES, phylo, RD){
   MRD <- mean(RD[which(phylo$tip.label %in% MATCHES[MATCHES[,2] %in% colnames(comm)[comm[i,] == 1],1])])

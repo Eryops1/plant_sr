@@ -6,15 +6,15 @@ library(rgeos)
 library(raster) 
 
 # Load data for endemics - phylogenetic
-load("MRD_ps_endemics.RData")
-ps_bl_a_end <- ps_bl.a_a_a
-ps_bl_b_end <- ps_bl.b_a_a
-ps_no_a_end <- ps_no.a_a_a
-ps_no_b_end <- ps_no.b_a_a
-rm(MRD.a_a_a, MRD.b_a_a, ps_bl.a_a_a, ps_bl.b_a_a, ps_no.a_a_a, ps_no.b_a_a, comm)
+# load("MRD_ps_endemics.RData")
+# ps_bl_a_end <- ps_bl.a_a_a
+# ps_bl_b_end <- ps_bl.b_a_a
+# ps_no_a_end <- ps_no.a_a_a
+# ps_no_b_end <- ps_no.b_a_a
+# rm(MRD.a_a_a, MRD.b_a_a, ps_bl.a_a_a, ps_bl.b_a_a, ps_no.a_a_a, ps_no.b_a_a, comm)
 
 # Load data for all species - phylogenetic
-load("MRD_ps.RData")
+load("plant_sr_data/MRD_ps.RData")
 ps_bl_a_all <- ps_bl.a_a_a
 ps_bl_b_all <- ps_bl.b_a_a
 ps_no_a_all <- ps_no.a_a_a
